@@ -40,8 +40,32 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         throw new UnsupportedOperationException();
     }
 
-    public DobbeltLenketListe(T[] a) {
-        throw new UnsupportedOperationException();
+    public DobbeltLenketListe(T[] a) { //Konstruktør for dobbelt lenket liste.
+        if (a==null){  //a kan ikke være null.
+            throw new NullPointerException();
+        }
+
+        if (a.length>0){ //Lager et hode for første element som ikke er null.
+            int i=0;
+            for (; i<a.length; i++){
+                if (a[i]!=null){
+                    hode = new Node<>(a[i]); //Setter hode til verdien av a[i].
+                    antall++; //Antall verdier i listen er minst 1.
+                    break;  //Bryter ut av funksjonen når hodet er satt.
+                }
+            }
+            hale=hode;
+            if (hode!=null){
+                i++;
+                for(; i<a.length; i++){
+                    if (a[i]!=null){
+                        hale.neste = new Node<>(a[i], hale, null);
+                        hale=hale.neste;
+                        antall++;
+                    }
+                }
+            }
+        }
     }
 
     public Liste<T> subliste(int fra, int til) {
@@ -50,12 +74,16 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public int antall() {
-        throw new UnsupportedOperationException();
+        return antall;
     }
 
     @Override
     public boolean tom() {
-        throw new UnsupportedOperationException();
+        if (hode==null){
+            return true;
+        } else{
+            return false;
+        }
     }
 
     @Override
