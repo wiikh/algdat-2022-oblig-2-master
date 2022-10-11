@@ -36,13 +36,16 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     private int antall;            // antall noder i listen
     private int endringer;         // antall endringer i listen
 
-    public DobbeltLenketListe() {
-        throw new UnsupportedOperationException();
+    public DobbeltLenketListe() {  //Konstruktør som ikke tar inn noen parametere.
+        hode=null;
+        hale=null;
+        antall=0;
+        endringer=0;
     }
 
     public DobbeltLenketListe(T[] a) { //Konstruktør for dobbelt lenket liste.
         if (a==null){  //a kan ikke være null.
-            throw new NullPointerException();
+            throw new NullPointerException("Tabellen a er null!");
         }
 
         if (a.length>0){ //Lager et hode for første element som ikke er null.
@@ -55,9 +58,9 @@ public class DobbeltLenketListe<T> implements Liste<T> {
                 }
             }
             hale=hode;
-            if (hode!=null){
+            if (hode!=null){ //Konstruerer resten av listen.
                 i++;
-                for(; i<a.length; i++){
+                for(; i<a.length; i++){  //Dytter halen bakover i listen for hver nye indeks som ikke er null.
                     if (a[i]!=null){
                         hale.neste = new Node<>(a[i], hale, null);
                         hale=hale.neste;

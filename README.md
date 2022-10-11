@@ -2,19 +2,14 @@
 
 Denne oppgaven er en innlevering i Algoritmer og Datastrukturer. 
 Oppgaven er levert av følgende studenter:
-* Navn Navnesen, S123456, s123456@oslomet.no
-* ...
+* Sander Wiik Hjermstad, s362119, s362119@oslomet.no
+
 
 # Arbeidsfordeling
 
-I oppgaven har vi hatt følgende arbeidsfordeling:
-* Per har hatt hovedansvar for oppgave 1, 3, og 5. 
-* Else har hatt hovedansvar for oppgave 2, 4, og 6. 
-* Fatima har hatt hovedansvar for oppgave 7 og 8. 
-* Vi har i fellesskap løst oppgave 10. 
+Jeg har jobbet alene på alle oppgavene.
 
 # Oppgavebeskrivelse
 
-I oppgave 1 så gikk vi frem ved å ...
-
-I oppgave 2 så brukte vi en ... til å ...
+I oppgave 1 løste jeg oppgaven ved å lage metodene "tom" og "antall", som ikke trengte så mye kode. Deretter lagde jeg en tom konstruktør
+for å initialisere hode, hale, antall og endringer, og en konstruktør for å sette hode, hale og listen for DobbeltLenketListe.
