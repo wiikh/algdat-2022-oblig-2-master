@@ -136,11 +136,45 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public String toString() {
-        throw new UnsupportedOperationException();
+        Node <T> toStringHode = hode; //Setter hode for String Builderen til Node hode for å hjelpe med å bygge stringen.
+        StringBuilder sbToString = new StringBuilder();  //Lager en ny String Builder.
+        sbToString.append("[");  //Stringen skal starte med "[".
+
+        if(tom()){
+            sbToString.append("]");  //Hvis stringen er tom skal den bare avsluttes med "]".
+        } else {
+            sbToString.append(toStringHode.verdi);
+            toStringHode=toStringHode.neste;
+            while (toStringHode!=null){ //Går gjennom hver verdi i inputen og gjør det om til en ny Strneg med ", " mellom hver verdi
+                sbToString.append(", ");
+                sbToString.append(toStringHode.verdi);
+                toStringHode=toStringHode.neste;
+            }
+        }
+        sbToString.append("]");
+        String utToString=sbToString.toString();
+        return utToString;
     }
 
-    public String omvendtString() {
-        throw new UnsupportedOperationException();
+    public String omvendtString() {  //Fungerer på samme måte som toString, med fra siste element til det første.
+        Node <T> oStringHale = hale;
+        StringBuilder sboString = new StringBuilder();
+        sboString.append("[");
+
+        if (tom()){
+            sboString.append("]");
+        } else {
+            sboString.append(oStringHale.verdi);
+            oStringHale=oStringHale.forrige;
+            while (oStringHale!=null){
+                sboString.append(", ");
+                sboString.append(oStringHale.verdi);
+                oStringHale=oStringHale.forrige;
+            }
+        }
+        sboString.append("]");
+        String utoString=sboString.toString();
+        return utoString;
     }
 
     @Override
