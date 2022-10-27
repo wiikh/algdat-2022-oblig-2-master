@@ -6,6 +6,7 @@ package no.oslomet.cs.algdat.Oblig2;
 
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.Objects;
 
 
 public class DobbeltLenketListe<T> implements Liste<T> {
@@ -72,7 +73,31 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
     public Liste<T> subliste(int fra, int til) {
-        throw new UnsupportedOperationException();
+        fratilKontroll(antall, fra, til);
+        Liste<T> liste = new DobbeltLenketListe<>();
+        int lengde=til-fra;
+
+        if(lengde<1){
+            return liste;
+        }
+
+        Node<T> current=finnNode(fra);
+
+        while(lengde>0){
+            liste.leggInn(current.verdi);
+            current=current.neste;
+            lengde--;
+        }
+        return liste;
+    }
+
+    //Hjelpemetode
+    private void fratilKontroll(int tLengde, int fra, int til){
+        if(fra<0 || til>tLengde){
+            throw new IndexOutOfBoundsException();
+        } if(fra>til){
+            throw new IllegalArgumentException();
+        }
     }
 
     @Override
@@ -91,7 +116,42 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public boolean leggInn(T verdi) {
-        throw new UnsupportedOperationException();
+        Objects.requireNonNull(verdi);
+        Node<T> nyNode = new Node<>(verdi);
+
+        if(hode==null && hale==null &&antall == 0){ //For tom liste
+            hode = nyNode;
+            hale=hode;
+            endringer++;
+            antall++;
+            return true;
+        } else{ //For liste som ikke er tom
+            nyNode.forrige=hale;
+            hale.neste=nyNode;
+            hale=nyNode;
+            endringer++;
+            antall++;
+            return true;
+        }
+    }
+
+    private Node<T>finnNode(int indeks){
+        indeksKontroll(indeks, false);
+        Node<T> current;
+
+        if(indeks<antall/2){ //Hvis indeks er mindre enn antall/2
+            current=hode;
+            for(int i=0; i<indeks; i++){
+                current=current.neste;
+            }
+            return current;
+        } else{ //Hvis indeks er større enn antall/2
+            current=hale;
+            for(int i=antall-1; i>indeks; i++){
+                current=current.forrige;
+            }
+            return current;
+        }
     }
 
     @Override
@@ -150,8 +210,8 @@ public class DobbeltLenketListe<T> implements Liste<T> {
                 sbToString.append(toStringHode.verdi);
                 toStringHode=toStringHode.neste;
             }
+            sbToString.append("]");
         }
-        sbToString.append("]");
         String utToString=sbToString.toString();
         return utToString;
     }
@@ -171,8 +231,8 @@ public class DobbeltLenketListe<T> implements Liste<T> {
                 sboString.append(oStringHale.verdi);
                 oStringHale=oStringHale.forrige;
             }
+            sboString.append("]");
         }
-        sboString.append("]");
         String utoString=sboString.toString();
         return utoString;
     }
