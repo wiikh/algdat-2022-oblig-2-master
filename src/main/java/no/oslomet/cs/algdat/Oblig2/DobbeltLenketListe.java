@@ -147,7 +147,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             return current;
         } else{ //Hvis indeks er større enn antall/2
             current=hale;
-            for(int i=antall-1; i>indeks; i++){
+            for(int i=antall-1; i>indeks; i--){
                 current=current.forrige;
             }
             return current;
@@ -166,7 +166,8 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public T hent(int indeks) {
-        throw new UnsupportedOperationException();
+        Node<T> current = finnNode(indeks);
+        return current.verdi;
     }
 
     @Override
@@ -175,8 +176,14 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
     @Override
-    public T oppdater(int indeks, T nyverdi) {
-        throw new UnsupportedOperationException();
+    public T oppdater(int indeks, T nyVerdi) {
+        Objects.requireNonNull(nyVerdi);
+        Node<T> current = finnNode(indeks);
+        T gammelverdi = current.verdi;
+        endringer++;
+        current.verdi=nyVerdi;
+
+        return gammelverdi;
     }
 
     @Override
