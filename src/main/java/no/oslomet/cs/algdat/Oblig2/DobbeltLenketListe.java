@@ -4,9 +4,7 @@ package no.oslomet.cs.algdat.Oblig2;
 ////////////////// class DobbeltLenketListe //////////////////////////////
 
 
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.Objects;
+import java.util.*;
 
 
 public class DobbeltLenketListe<T> implements Liste<T> {
@@ -218,12 +216,79 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public boolean fjern(T verdi) {
-        throw new UnsupportedOperationException();
+        if(verdi==null){
+            return false;
+        }
+        Node<T> current=hode;
+
+        if(verdi.equals(current.verdi)){
+            if (current.neste != null) {
+                hode=current.neste;
+                hode.forrige=null;
+            } else{
+                hale=null;
+                hode=null;
+            }
+            antall--;
+            endringer++;
+            return true;
+        }
+
+        current = hale;
+        if(verdi.equals(current.verdi)){
+            hale=current.forrige;
+            hale.neste=null;
+            antall--;
+            endringer++;
+            return true;
+        }
+
+        current=hode.neste;
+        for(; current!=null; current=current.neste){
+            if(verdi.equals(current.verdi)){
+                current.forrige.neste=current.neste;
+                current.neste.forrige=current.forrige;
+                antall--;
+                endringer++;
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
     public T fjern(int indeks) {
-        throw new UnsupportedOperationException();
+        indeksKontroll(indeks, false);
+
+        Node<T> current = hode;
+        T verdi;
+
+        if(indeks==0){ //Første verdi i indeks fjernes
+            verdi=current.verdi;
+            if(current.neste!=null){
+                hode=current.neste;
+                hode.forrige=null;
+            } else{
+                hode=null;
+                hale=null;
+            }
+        } else if(indeks==antall-1){
+            current=hale;
+            verdi=hale.verdi;
+            hale=current.forrige;
+            hale.neste=null;
+        } else{
+            for(int i=0; i<indeks; i++){
+                current=current.neste;
+            }
+            verdi=current.verdi;
+            current.forrige.neste=current.neste;
+            current.neste.forrige=current.forrige;
+        }
+        antall--;
+        endringer++;
+        return verdi;
+
     }
 
     @Override
@@ -305,7 +370,10 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
         @Override
         public T next() {
-            throw new UnsupportedOperationException();
+            if(!hasNext()){
+                throw new NoSuchElementException("Ingen verdier i listen");
+            }
+            if(endringer!=itaratorendinger)
         }
 
         @Override
