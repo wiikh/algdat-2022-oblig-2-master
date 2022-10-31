@@ -345,7 +345,8 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
     public Iterator<T> iterator(int indeks) {
-        throw new UnsupportedOperationException();
+        indeksKontroll(indeks, false);
+        return new DobbeltLenketListeIterator(indeks);
     }
 
     private class DobbeltLenketListeIterator implements Iterator<T> {
@@ -378,10 +379,10 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             if(endringer!=iteratorendringer){
                 throw new ConcurrentModificationException("Listen har blitt endret.");
             }
-            T temp=denne.verdi;
+            T tempverdi=denne.verdi;
             denne=denne.neste;
             fjernOK=true;
-            return temp;
+            return tempverdi;
         }
 
         @Override
